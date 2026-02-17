@@ -9,6 +9,8 @@ from utils.gemini_analyzer import GeminiAnalyzer
 
 logger = logging.getLogger(__name__)
 
+_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
+
 def generate_briefs(opportunities, research_profile):
     """
     Generate comprehensive briefs for all opportunities
@@ -32,7 +34,7 @@ def generate_briefs(opportunities, research_profile):
 
         if brief:
             # Save to file
-            filename = f"data/opportunities/{opp['bottleneck']['industry']}_{datetime.now().strftime('%Y%m%d')}.md"
+            filename = os.path.join(_ROOT, f"data/opportunities/{opp['bottleneck']['industry']}_{datetime.now().strftime('%Y%m%d')}.md")
             os.makedirs(os.path.dirname(filename), exist_ok=True)
 
             with open(filename, 'w') as f:

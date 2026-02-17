@@ -23,6 +23,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+_ROOT = os.path.join(os.path.dirname(__file__), '..')
+
 def main():
     """
     Main entry point for Patent Scout
@@ -34,10 +36,10 @@ def main():
 
     try:
         # Load configurations
-        with open('config/yatom_research_profile.yaml', 'r') as f:
+        with open(os.path.join(_ROOT, 'config/yatom_research_profile.yaml'), 'r') as f:
             research_profile = yaml.safe_load(f)
 
-        with open('config/industries.yaml', 'r') as f:
+        with open(os.path.join(_ROOT, 'config/industries.yaml'), 'r') as f:
             industries = yaml.safe_load(f)
 
         logger.info("Configurations loaded successfully")
