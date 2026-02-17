@@ -10,11 +10,14 @@ from datetime import datetime
 import yaml
 
 # Setup logging
+_log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
+os.makedirs(_log_dir, exist_ok=True)
+_log_file = os.path.join(_log_dir, f'patent_scout_{datetime.now().strftime("%Y%m%d")}.log')
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler(f'logs/patent_scout_{datetime.now().strftime("%Y%m%d")}.log'),
+        logging.FileHandler(_log_file),
         logging.StreamHandler()
     ]
 )
