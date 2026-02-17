@@ -24,8 +24,8 @@ class GeminiAnalyzer:
         else:
             try:
                 genai.configure(api_key=api_key)
-                self.model = genai.GenerativeModel('gemini-2.0-pro-exp')
-                logger.info("Initialized Gemini Pro for IP and commercial analysis")
+                self.model = genai.GenerativeModel('gemini-3-flash-preview')
+                logger.info("Initialized Gemini 3 Flash Preview for IP and commercial analysis")
             except Exception as e:
                 logger.error(f"Gemini initialization failed: {e}")
                 self.model = None
