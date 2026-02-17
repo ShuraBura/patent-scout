@@ -1,0 +1,86 @@
+name: Event-Triggered Prior Art Check
+
+on:
+  workflow_dispatch:
+    inputs:
+      invention_description:
+        description: 'Description of the invention to check prior art for'
+        required: true
+        type: string
+      urgency:
+        description: 'Urgency level'
+        required: false
+        default: 'normal'
+        type: choice
+        options:
+          - normal
+          - high
+          - critical
+
+jobs:
+  prior-art-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: mkdir -p logs
+
+      - name: Run Prior Art Check
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          INVENTION_DESCRIPTION: ${{ github.event.inputs.invention_description }}
+        run: |
+          cd src && python -c "
+          import os
+          import json
+          from datetime import datetime
+          from invention_miner.prior_art_search import check_prior_art
+          from utils.email_sender import send_monthly_report
+
+          invention = os.getenv('INVENTION_DESCRIPTION', '')
+          print(f'Checking prior art for: {invention[:100]}...')
+
+          result = check_prior_art(invention)
+
+          # Save result
+          filename = f'../data/your_research/prior_art_{datetime.now().strftime(\"%Y%m%d_%H%M%S\")}.json'
+          os.makedirs(os.path.dirname(filename), exist_ok=True)
+          with open(filename, 'w') as f:
+              json.dump(result, f, indent=2)
+
+          print(f'Prior art found: {len(result[\"prior_art_found\"])} patents')
+          print(f'White space: {result[\"white_space\"]}')
+          print(f'Recommendation: {result[\"recommendation\"]}')
+          "
+
+      - name: Commit prior art results
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add data/your_research/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Prior art check: $(date +'%Y-%m-%d %H:%M')"
+          git push
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prior-art-check-logs
+          path: logs/
+          retention-days: 30

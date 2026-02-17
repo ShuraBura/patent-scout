@@ -1,0 +1,30 @@
+# Patent Classification Codes to Monitor
+
+primary_codes:
+  H05H:
+    description: "Plasma technique"
+    subcodes:
+      - H05H1: "Plasma generation"
+      - H05H5: "Direct plasma acceleration"
+
+  B01J:
+    description: "Chemical or physical processes"
+    subcodes:
+      - B01J19: "Chemical/physical/physico-chemical processes"
+      - B01J23: "Catalysts"
+
+secondary_codes:
+  C01B:
+    description: "Non-metallic elements; compounds thereof"
+
+  C22B:
+    description: "Production/refining of metals; pretreatment of raw materials"
+
+  H01M:
+    description: "Processes or means for direct conversion of chemical into electrical energy"
+    subcodes:
+      - H01M10: "Secondary cells; manufacture thereof"
+
+monitoring_strategy:
+  frequency: "quarterly"
+  alert_threshold: 5  # Alert if >5 new patents in monitored codes

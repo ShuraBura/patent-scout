@@ -1,0 +1,30 @@
+# Sentinel Integration Configuration
+
+sentinel:
+  enabled: true
+  trigger_events:
+    - "paper_submission"
+    - "conference_abstract"
+    - "grant_application"
+
+  # When Sentinel detects paper submission, Scout checks prior art
+  paper_submission:
+    action: "prior_art_check"
+    urgency: "high"
+    response_time_hours: 24
+
+oracle:
+  enabled: true
+  trigger_events:
+    - "commercial_opportunity"
+    - "industry_signal"
+
+  # When Oracle finds commercial signal, Scout checks patent landscape
+  commercial_opportunity:
+    action: "patent_landscape_check"
+    urgency: "medium"
+    response_time_hours: 48
+
+notification:
+  channel: "email"
+  recipient_env: "EMAIL_RECIPIENT"

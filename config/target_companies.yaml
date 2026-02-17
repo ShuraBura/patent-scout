@@ -1,0 +1,48 @@
+# Non-Plasma Companies (Potential Customers/Partners)
+
+battery_companies:
+  - name: "Northvolt"
+    industry: "Battery manufacturing & recycling"
+    location: "Sweden"
+    size: "3000+ employees"
+    pain_points: ["cathode material cost", "recycling efficiency"]
+
+  - name: "Redwood Materials"
+    industry: "Battery recycling"
+    location: "USA"
+    pain_points: ["lithium recovery rate", "processing speed"]
+
+  - name: "Li-Cycle"
+    industry: "Lithium-ion battery recycling"
+    location: "Canada"
+    pain_points: ["hydrometallurgical efficiency"]
+
+  - name: "Ascend Elements"
+    industry: "Battery material recycling"
+    location: "USA"
+
+mining_companies:
+  - name: "Rio Tinto"
+    industry: "Mining (including REE)"
+    pain_points: ["REE separation", "energy intensity"]
+
+  - name: "BHP"
+    industry: "Mining and minerals"
+
+  - name: "MP Materials"
+    industry: "Rare earth mining and processing"
+    location: "USA"
+    pain_points: ["REE separation", "processing cost"]
+
+materials_companies:
+  - name: "BASF"
+    industry: "Chemical materials"
+    pain_points: ["catalyst synthesis", "process efficiency"]
+
+  - name: "3M"
+    industry: "Advanced materials"
+
+  - name: "Umicore"
+    industry: "Battery materials and recycling"
+    location: "Belgium"
+    pain_points: ["cathode material recycling"]

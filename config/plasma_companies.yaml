@@ -1,0 +1,37 @@
+# Plasma Companies to Track
+
+plasma_companies:
+  - name: "Y2Plasma"
+    focus: "Cold atmospheric plasma"
+    location: "Netherlands"
+    website: "y2plasma.com"
+
+  - name: "PlasmaLeap"
+    focus: "Plasma processing"
+    location: "USA"
+
+  - name: "AAPlasma"
+    focus: "Plasma surface treatment"
+    location: "Germany"
+
+  - name: "6K Energy"
+    focus: "Microwave plasma, battery materials"
+    location: "USA"
+    website: "6kinc.com"
+
+  - name: "6K Additive"
+    focus: "Plasma for additive manufacturing"
+    location: "USA"
+
+  - name: "Lyten"
+    focus: "Plasma for graphene/CNT"
+    location: "USA"
+
+  - name: "Resynergi"
+    focus: "Plasma pyrolysis"
+    location: "Norway"
+
+monitoring:
+  check_new_patents: true
+  check_funding: true
+  frequency: "monthly"

@@ -1,0 +1,34 @@
+# Your Research Profile for Patent Scout
+
+current_focus:
+  - PDSE critical mineral recovery
+  - Carbon nanotube synthesis
+  - Plasma-liquid diagnostics
+
+unique_capabilities:
+  - name: "PDSE with E_PLI Control"
+    description: "Real-time electrochemical potential measurement at plasma-liquid interface"
+    advantage: "Only group worldwide with this capability"
+
+  - name: "Nanosecond Pulsed Discharge"
+    description: "1-20 ns pulse control, 70-200 kV"
+    advantage: "PhD expertise, <5 groups worldwide"
+
+  - name: "Thomson/Raman Combined Diagnostics"
+    description: "Spatial resolution 1-10 um at interface"
+    advantage: "Rare capability in liquid-phase plasmas"
+
+collaboration_gaps:
+  - "Solution chemistry expertise"
+  - "Electrochemical engineering"
+  - "Technoeconomic analysis"
+
+recent_papers:
+  - title: "PDSE for critical mineral recovery"
+    status: "in_preparation"
+    journal: "PSST"
+
+priorities:
+  high: ["battery_recycling", "critical_minerals", "REE_separation"]
+  medium: ["CNT_synthesis", "plasma_catalysis"]
+  low: ["atmospheric_plasma"]

@@ -1,0 +1,75 @@
+name: Quarterly Patent Mining
+
+on:
+  schedule:
+    - cron: '0 9 1 1,4,7,10 *'  # 1st of Jan, Apr, Jul, Oct at 9 AM UTC
+  workflow_dispatch:
+
+jobs:
+  patent-mining:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: |
+          mkdir -p logs
+          mkdir -p data/patent_landscape
+
+      - name: Run Patent Landscape Mining
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: |
+          cd src && python -c "
+          import yaml
+          from patent_landscape.google_patents_scraper import check_patent_landscape
+          from patent_landscape.uspto_fetcher import search_uspto
+
+          with open('../config/cpc_codes.yaml') as f:
+              cpc = yaml.safe_load(f)
+
+          with open('../config/industries.yaml') as f:
+              industries = yaml.safe_load(f)
+
+          results = {}
+          for industry, config in industries['target_industries'].items():
+              landscape = check_patent_landscape({'industry': industry, 'process': 'general'})
+              results[industry] = landscape
+              print(f'{industry}: {landscape[\"total_patents\"]} patents found, white space: {landscape[\"white_space\"]}')
+
+          import json
+          from datetime import datetime
+          with open(f'../data/patent_landscape/quarterly_{datetime.now().strftime(\"%Y%m%d\")}.json', 'w') as f:
+              json.dump(results, f, indent=2)
+          "
+
+      - name: Commit patent landscape data
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add data/patent_landscape/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update: Quarterly patent landscape $(date +'%Y-%m-%d')"
+          git push
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: patent-mining-logs
+          path: logs/
+          retention-days: 90

@@ -1,0 +1,54 @@
+name: Monthly Industry Scan
+
+on:
+  schedule:
+    - cron: '0 10 15 * *'  # 15th of each month, 10 AM UTC
+  workflow_dispatch:
+
+jobs:
+  industry-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Create logs directory
+        run: mkdir -p logs
+
+      - name: Run Patent Scout
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          PRINCETON_NETID: ${{ secrets.PRINCETON_NETID }}
+          PRINCETON_PASSWORD: ${{ secrets.PRINCETON_PASSWORD }}
+        run: |
+          cd src && python main.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add data/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update: Monthly industry scan $(date +'%Y-%m-%d')"
+          git push
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: patent-scout-logs
+          path: logs/
+          retention-days: 30

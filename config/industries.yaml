@@ -1,0 +1,28 @@
+# Industries to Monitor
+
+target_industries:
+  battery:
+    keywords: ["lithium-ion", "cathode", "anode", "recycling", "battery materials"]
+    pain_points: ["recycling efficiency", "cathode synthesis", "cost reduction"]
+
+  critical_minerals:
+    keywords: ["rare earth", "REE", "lithium", "cobalt", "nickel", "dysprosium"]
+    pain_points: ["separation", "extraction", "ore processing"]
+
+  carbon_materials:
+    keywords: ["CNT", "graphene", "carbon nanotubes", "carbon black"]
+    pain_points: ["synthesis selectivity", "scalability", "cost"]
+
+  semiconductor:
+    keywords: ["silicon", "wafer", "etching", "deposition"]
+    pain_points: ["selective etching", "high-k materials"]
+
+report_sources:
+  - url: "https://www.energy.gov/cmm/critical-materials-reports"
+    type: "DOE"
+
+  - url: "https://www.iea.org/reports"
+    type: "IEA"
+
+  - url: "https://www.usgs.gov/centers/nmic/mineral-commodity-summaries"
+    type: "USGS"
