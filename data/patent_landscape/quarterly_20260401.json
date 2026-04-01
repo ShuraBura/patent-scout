@@ -1,0 +1,26 @@
+{
+  "battery": {
+    "total_patents": 0,
+    "plasma_patents": 0,
+    "white_space": true,
+    "patents": []
+  },
+  "critical_minerals": {
+    "total_patents": 0,
+    "plasma_patents": 0,
+    "white_space": true,
+    "patents": []
+  },
+  "carbon_materials": {
+    "total_patents": 0,
+    "plasma_patents": 0,
+    "white_space": true,
+    "patents": []
+  },
+  "semiconductor": {
+    "total_patents": 0,
+    "plasma_patents": 0,
+    "white_space": true,
+    "patents": []
+  }
+}
